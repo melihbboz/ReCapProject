@@ -1,6 +1,8 @@
 ﻿
 using Business.Concrete;
+using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
+using Entities.Concrete;
 using System;
 
 namespace ConsoleUI
@@ -9,16 +11,27 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarManager carManager = new CarManager(new InMemoryCarDal());
+            CarManager carManager = new CarManager(new EfCarDal());
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+
+
+            
             foreach (var car in carManager.GetAll())
             {
-                Console.WriteLine("Araba id: "+ car.CarId);
-                Console.WriteLine("Araba model id: "+car.BrandId);
-                Console.WriteLine("Araba model id: "+car.ColorId);
-                Console.WriteLine("Araba model yılı: "+car.ModelYear);
-                Console.WriteLine("Araba günlük kiralama ücreti: "+car.DailyPrice);
-                Console.WriteLine("Tanım: "+car.Description);
-                Console.WriteLine("------------");
+                Console.WriteLine("-{0} marka, {1} renk, {2} Tl, {3} model, {4}\n", brandManager.GetById(car.BrandId).BrandName, colorManager.GetById(car.ColorId).ColorName, car.DailyPrice, car.ModelYear, car.Description);
+            }
+
+
+            brandManager.Add(new Brand { BrandName="m"});
+
+            brandManager.Add(new Brand {BrandName="Toyota" });
+
+            Console.WriteLine("Eklemeden sonraki yeni tablo:\n");
+
+            foreach (var brand in brandManager.GetAll())
+            {
+                Console.WriteLine(brand.BrandName);
             }
         }
     }
