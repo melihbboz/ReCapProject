@@ -1,7 +1,7 @@
 ﻿
 using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
-using DataAccess.Concrete.InMemory;
+
 using Entities.Concrete;
 using System;
 
@@ -17,8 +17,42 @@ namespace ConsoleUI
             Console.WriteLine("Renkler:\n");
             ColorGetAll();
             Console.WriteLine("-------------------------");
-            Console.WriteLine("Kiralanabilir Araba Detayları:\n");
+            Console.WriteLine("Araba Detayları:\n");
             GetCarDetailsTest();
+            
+            Console.WriteLine("-------------------------");
+            Console.WriteLine("Kiralanmış Araba Detayları:\n");
+            GetRentalDetailsTest();
+
+            //RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            //var result = rentalManager.Add(new Rental {CarId=1,CustomerId=2});
+            //if (result.Success)
+            //{
+            //    Console.WriteLine(result.Message);
+                
+                
+            //}
+            //Console.WriteLine(result.Message);
+        }
+
+        private static void GetRentalDetailsTest()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            var result = rentalManager.GetRentalDetailsDto(1);
+
+            if (result.Success)
+            {
+                foreach (var rental in result.Data)
+                {
+                    Console.WriteLine(rental.CarId + " / " + rental.CarName + " / " + rental.CustomerName + " / " + rental.RentDate + " / " + rental.ReturnDate);
+                }
+
+            }
+
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
         }
 
         private static void CarAddTest()
