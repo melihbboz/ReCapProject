@@ -30,19 +30,7 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<ICarService, CarManager>();
-            services.AddSingleton<IBrandService,BrandManager>();
-            services.AddSingleton<IColorService,ColorManager>();
-            services.AddSingleton<ICustomerService,CustomerManager>();
-            services.AddSingleton<IRentalService,RentalManager>();
-            services.AddSingleton<IUserService,UserManager>();
-
-            services.AddSingleton<ICarDal,EfCarDal>();
-            services.AddSingleton<IBrandDal,EfBrandDal>();
-            services.AddSingleton<IColorDal,EfColorDal>();
-            services.AddSingleton<ICustomerDal,EfCustomerDal>();
-            services.AddSingleton<IRentalDal,EfRentalDal>();
-            services.AddSingleton<IUserDal,EfUserDal>();
+            
 
         }
 
